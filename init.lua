@@ -15,6 +15,7 @@ vim.keymap.set("n", "<BS>f", ":diffget //2<CR>")
 vim.keymap.set("v", "<BS>f", ":diffget //2<CR>")
 vim.keymap.set("n", "<BS>j", ":diffget //3<CR>")
 vim.keymap.set("v", "<BS>j", ":diffget //3<CR>")
+vim.keymap.set("n", "zt", ":NvimTreeOpen <CR>")
 
 vim.keymap.set("v", "<C-y>", '"*y')
 
@@ -467,6 +468,8 @@ local plugins = {
 
 	-- color theme
 	{ "bluz71/vim-moonfly-colors", init = moonfly_init, name = "moonfly", lazy = false, priority = 1000 },
+	-- tree
+	{ "nvim-tree/nvim-tree.lua"}
 }
 
 ----------------------------------------
@@ -485,6 +488,32 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 require("lazy").setup(plugins)
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- optionally enable 24-bit colour
+vim.opt.termguicolors = true
+
+-- empty setup using defaults
+require("nvim-tree").setup()
+
+-- OR setup with some options
+require("nvim-tree").setup({
+  sort = {
+    sorter = "case_sensitive",
+  },
+  view = {
+    width = 30,
+	side = "right",
+  },
+  renderer = {
+    group_empty = true,
+  },
+  filters = {
+    dotfiles = true,
+  },
+})
 
 ----------------------------------------
 -- Telescope
